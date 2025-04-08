@@ -176,14 +176,261 @@ fn take_ownership_with_return(some_string: String) -> String {
 /// case 3
 /// if you want to borrow a mutable reference of a var then you can only borrow it once at a time no matter other are simple borrowings or mutable borrowings
 
-fn main() {
-    let mut s1 = String::from("Hello");
-    // let s2 = &mut s1; // commenting because i cant borrow that in the next line of code
-    update_word(&mut s1); // you cant borrow two mutable references of a single variable at the same time
-    println!("{}", s1);
-    // println!("{}", s2);
+// fn main() {
+//     let mut s1 = String::from("Hello");
+//     // let s2 = &mut s1; // commenting because i cant borrow that in the next line of code
+//     update_word(&mut s1); // you cant borrow two mutable references of a single variable at the same time
+//     println!("{}", s1);
+//     // println!("{}", s2);
+// }
+
+// fn update_word(word: &mut String) {
+//     word.push_str(" World");
+// }
+
+// ************************************
+// Practice
+
+// Error 1
+
+// Fix the ownership issues in this code
+// fn main() {
+//     let s1 = String::from("hello");
+//     let s2 = s1;
+//     println!("{}, world!", s1);
+// }
+
+// Fix:-
+
+// fn main() {
+//     let s1 = String::from("hello");
+//     let _s2 = &s1;
+//     println!("{}, world!", s1);
+// }
+
+// error 2
+// fn main() {
+//     let s = String::from("ownership");
+//     print_string(s);
+//     println!("Can I still use s here? {}", s); // Fix this
+// }
+
+// fn print_string(s: String) {
+//     println!("{}", s);
+// }
+
+// fix :-
+
+// fn main() {
+//     let s = String::from("ownership");
+//     print_string(&s);
+//     println!("Can I still use s here? {}", s); // Fix this
+// }
+
+// fn print_string(s: &String) {
+//     println!("{}", s);
+// }
+
+// error 3
+
+// fn main() {
+//     let mut x = 5;
+//     increment(&mut x);
+//     println!("x is now {}", x);
+// }
+
+// // Implement this function to increment x by 1
+// fn increment(x: &mut i32) {
+//     // Your code here
+// }
+
+// fix :-
+
+// fn main() {
+//     let mut x = 5;
+//     increment(&mut x);
+//     println!("x is now {}", x);
+// }
+
+// // Implement this function to increment x by 1
+// fn increment(x: &mut i32) {
+//     // Your code here
+//     *x += 1; // * is the dereference operator it is used to access the value of the variable
+// }
+
+// error 4 Create a Rectangle Struct
+
+// struct Rectangle {
+//     width: u32,
+//     height: u32,
+// }
+
+// fn main() {
+//     // 1. Create a rectangle instance
+//     // 2. Print its width and height
+//     // 3. Write an area function that takes a Rectangle and returns area
+// }
+
+// fix :-
+
+// struct Rectangle {
+//     width: u32,
+//     height: u32,
+// }
+
+// impl Rectangle {
+//     fn area(&self) -> u32 {
+//         self.width * self.height
+//     }
+// }
+
+// fn main() {
+//     // 1. Create a rectangle instance
+//     // 2. Print its width and height
+//     // 3. Write an area function that takes a Rectangle and returns area
+//     let rect = Rectangle {
+//         width: 10,
+//         height: 20,
+//     };
+//     println!(
+//         "here is the height of rect {} and here is the width {}",
+//         rect.height, rect.width
+//     );
+//     let area = rect.area();
+//     println!("the area of this rect is {}", area);
+// }
+
+// error 5
+
+// Create a Rectangle struct with width and height
+// Implement an area() method and a square constructor
+// struct Rectangle {
+//     // Your code here
+// }
+
+// impl Rectangle {
+//     // Your code here
+// }
+
+// fn main() {
+//     let rect = Rectangle::new(30, 50);
+//     println!("Area: {}", rect.area());
+
+//     let square = Rectangle::square(10);
+//     println!("Square area: {}", square.area());
+// }
+
+// fix :-
+// Create a Rectangle struct with width and height
+// Implement an area() method and a square constructor
+// struct Rectangle {
+//     width: u32,
+//     height: u32,
+// }
+
+// impl Rectangle {
+//     fn new(width: u32, height: u32) -> Rectangle {
+//         Rectangle { width, height }
+//     }
+
+//     fn area(&self) -> u32 {
+//         self.width * self.height
+//     }
+
+//     fn square(size: u32) -> Rectangle {
+//         Rectangle {
+//             width: size,
+//             height: size,
+//         }
+//     }
+// }
+
+// fn main() {
+//     let rect = Rectangle::new(30, 50);
+//     println!("Area: {}", rect.area());
+
+//     let square = Rectangle::square(10);
+//     println!("Square area: {}", square.area());
+// }
+
+// Enums (Like JS Union Types)
+// Enums let you define a type by enumerating its possible values.
+
+// enum TrafficLight {
+//     Red,
+//     Yellow,
+//     Green,
+// }
+
+// fn main() {
+//     let light = TrafficLight::Red;
+
+//     match light {
+//         TrafficLight::Red => println!("Stop!"),
+//         TrafficLight::Yellow => println!("Slow down!"),
+//         TrafficLight::Green => println!("Go!"),
+//     }
+// }
+
+// error 6
+
+// enum WebEvent {
+//     PageLoad,
+//     KeyPress(char),
+// }
+
+// fn main() {
+//     // 1. Create a PageLoad event and handle it
+//     // 2. Create a KeyPress event with 'a' and handle it
+// }
+
+// fix:-
+
+// enum WebEvent {
+//     PageLoad,
+//     KeyPress(char),
+// }
+
+// fn main() {
+//     // 1. Create a PageLoad event and handle it
+//     // 2. Create a KeyPress event with 'a' and handle it
+//     let loaded = WebEvent::PageLoad;
+//     match loaded {
+//         WebEvent::PageLoad => println!("Google help"),
+//         WebEvent::KeyPress(c) => println!("here is the pressed char {}", c),
+//     }
+
+//     let key_pressed = WebEvent::KeyPress('a');
+//     match key_pressed {
+//         WebEvent::PageLoad => println!("Google help"),
+//         WebEvent::KeyPress(c) => println!("here is the pressed char {}", c),
+//     }
+// }
+
+// Define an enum called Shape
+enum Shape {
+    Circle(f64),         // Variant with associated data (radius)
+    Square(f64),         // Variant with associated data (side length)
+    Rectangle(f64, f64), // Variant with associated data (width, height)
 }
 
-fn update_word(word: &mut String) {
-    word.push_str(" World");
+// Function to calculate area based on the shape
+fn calculate_area(shape: Shape) -> f64 {
+    match shape {
+        Shape::Circle(radius) => std::f64::consts::PI * radius * radius,
+        Shape::Square(side_length) => side_length * side_length,
+        Shape::Rectangle(width, height) => width * height,
+    }
+}
+
+fn main() {
+    // Create instances of different shapes
+    let circle = Shape::Circle(5.0);
+    let square = Shape::Square(4.0);
+    let rectangle = Shape::Rectangle(3.0, 6.0);
+    println!("This is the value of pi {}", std::f64::consts::PI);
+    // Calculate and print the areas
+    println!("Area of circle: {}", calculate_area(circle));
+    println!("Area of square: {}", calculate_area(square));
+    println!("Area of rectangle: {}", calculate_area(rectangle));
 }
